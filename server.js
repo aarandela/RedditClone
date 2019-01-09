@@ -75,3 +75,29 @@ app.post('/',
   function (req, res) {
     res.redirect('/success?username=' + req.user.username)
   })
+
+/*  FACEBOOK AUTH  */
+
+const FacebookStrategy = require('passport-facebook').Strategy
+
+const FACEBOOK_APP_ID = '355132191707152'
+const FACEBOOK_APP_SECRET = '4497392898aed10a79aedca7b00e49b1'
+
+passport.use(new FacebookStrategy({
+  clientID: FACEBOOK_APP_ID,
+  clientSecret: FACEBOOK_APP_SECRET,
+  callbackURL: '/auth/facebook/callback'
+},
+function (accessToken, refreshToken, profile, cb) {
+  return cb(null, profile)
+}
+))
+
+app.get('/auth/facebook',
+  passport.authenticate('facebook'))
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/error' }),
+  function (req, res) {
+    res.redirect('/success')
+  })
