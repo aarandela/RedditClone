@@ -21,7 +21,7 @@ Fork and clone
 Install all the modules using Node.js
 
 ```
-npm i pg mysql express 
+npm i pg sequelize express handlebars passport
 ```
 
 And repeat
@@ -58,9 +58,9 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [PostgresQL](https://www.postgresql.org/) - One of the database used
-* [MySQL](https://www.mysql.com/) - One of the database used
+* [PostgresQL](https://www.postgresql.org/) - Database used
 * [Sequelize](http://docs.sequelizejs.com/) - Abstraction layer used to swap between database types
+* [Handlebars](https://handlebarsjs.com/) - Used for the HTML templating
 * [Bulma](https://bulma.io) - Used for the CSS framework
 * [Passport.js](http://www.passportjs.org/) - Middleware for user authentication
 * [Express](https://expressjs.com/) - Web framework used for routing
