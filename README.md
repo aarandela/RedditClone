@@ -1,4 +1,4 @@
-# RedditClone
+# Spreddit
 
 Simple clone of 'The front page of the Internet', Reddit. 
 

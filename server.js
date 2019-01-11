@@ -1,31 +1,27 @@
+
 /*  EXPRESS SETUP  */
 
 const express = require('express')
 const app = express()
+const Sequelize = require('sequelize')
+const db = require('./db')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => res.sendFile('auth.html', { root: __dirname }))
+app.get('/', (req, res) => res.sendFile('./html/auth.html', { root: __dirname }))
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log('App listening on port ' + port))
 
 /*  SEQUELIZE SETUP */
 
-const Sequelize = require('sequelize')
-const sequelize = new Sequelize('RedditClone', 'postgres', '', {
-  host: 'localhost',
-  dialect: 'postgres'
-})
-
-const UserDetails = sequelize.define('user', {
+const UserDetails = db.define('user', {
   username: Sequelize.STRING,
   password: Sequelize.STRING
 })
 
-sequelize
-  .authenticate()
+db.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.')
   })

@@ -12,12 +12,12 @@
   "dependencies": {
     "express": "^4.16.4",
     "handlebars": "^4.0.12",
-    "mysql": "^2.16.0",
     "nodemon": "^1.18.9",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pg": "^7.7.1",
+    "pg-promise": "^8.5.4",
     "sequelize": "^4.42.0"
   }
 }

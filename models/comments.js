@@ -1,5 +1,4 @@
 'use strict'
-const users = require('./users')
 module.exports = (sequelize, DataTypes) => {
   const comments = sequelize.define('comments', {
     user_id: DataTypes.INTEGER,
@@ -7,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   comments.associate = function (models) {
     // associations can be defined here
-    comments.belongsTo(users)
+    comments.belongsTo(models.users, {
+      foreignKey: 'user_id'
+    })
   }
   return comments
 }
