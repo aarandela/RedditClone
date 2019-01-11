@@ -1,6 +1,6 @@
 # Spreddit
 
-Simple clone of 'The front page of the Internet', Reddit. 
+Simple clone of 'The front page of the Internet', Reddit. The purpose of this project is for learning purposes only!
 
 ## Getting Started
 
