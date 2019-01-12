@@ -7,7 +7,8 @@ module.exports = {
       .create({
         title: req.body.title,
         url: req.body.url
-      })
+      }, console.log(req.params))
+
     // send result to client
       .then(function (result) {
         res.status(201).json(result)

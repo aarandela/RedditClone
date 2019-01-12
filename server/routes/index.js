@@ -17,7 +17,6 @@ router.post('/api/users', usersController.add)
 
 // Comments Router
 router.get('/api/comments', commentsController.list)
-router.get('/api/comments/:id', commentsController.getById)
 router.post('/api/comments', commentsController.add)
 
 module.exports = router
