@@ -20,7 +20,9 @@ module.exports = {
 
   list (req, res) {
     return comments
-      .findAll()
+      .findAll({
+        attributes: ['text']
+      })
       .then((comments) => res.status(200).send(comments))
       .catch((error) => { res.status(400).send(error) })
   }

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'user_id',
       as: 'commented'
     })
-    users.hasMany(models.content, {
+    users.hasMany(models.contents, {
       foreignKey: 'user_id',
       as: 'OP'
     })

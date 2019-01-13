@@ -3,35 +3,18 @@ const users = require('../../models').users
 module.exports = {
   add (req, res) {
   // Save to PostgreSQL database
-    console.log(req.params)
-    res.send(req.params)
-    res.send(req.body)
-
-    // return users
-    //   .create({
-    //     username: req.body.username,
-    //     password: req.body.password,
-    //     createdAt: {
-    //   allowNull: true,
-    //   type: Sequelize.DATE,
-    //   createdAt: Sequelize.literal('NOW()'),
-    //   updatedAt: Sequelize.literal('NOW()')
-
-    // },
-    // updatedAt: {
-    //   allowNull: true,
-    //   type: Sequelize.DATE,
-    //   createdAt: Sequelize.literal('NOW()'),
-    //   updatedAt: Sequelize.literal('NOW()')
-    // }
-    //   }, console.log(req.params))
+    return users
+      .create({
+        username: req.body.username,
+        password: req.body.password
+      }, console.log(req.params))
     // send result to client
-    // .then(function (result) {
-    //   res.status(201).json(result)
-    // })
-    // .catch(function (error) {
-    //   res.status(400).send(error)
-    // })
+      .then(function (result) {
+        res.status(201).json(result)
+      })
+      .catch(function (error) {
+        res.status(400).send(error)
+      })
   },
 
   getById (req, res) {
@@ -50,7 +33,9 @@ module.exports = {
 
   list (req, res) {
     return users
-      .findAll()
+      .findAll({
+        attributes: ['username']
+      })
       .then((users) => res.status(200).send(users))
       .catch((error) => { res.status(400).send(error) })
   }

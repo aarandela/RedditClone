@@ -34,7 +34,9 @@ module.exports = {
 
   list (req, res) {
     return contents
-      .findAll()
+      .findAll({
+        attributes: ['title', 'url']
+      })
       .then((contents) => res.status(200).send(contents))
       .catch((error) => { res.status(400).send(error) })
   }
