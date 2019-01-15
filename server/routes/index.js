@@ -20,5 +20,3 @@ router.get('/api/comments', commentsController.list)
 router.post('/api/comments', commentsController.add)
 
 module.exports = router
-
-// hehehehehehe banana

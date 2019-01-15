@@ -3,7 +3,9 @@ module.exports = (sequelize, DataTypes) => {
   const contents = sequelize.define('contents', {
     title: DataTypes.STRING,
     url: DataTypes.STRING
-  }, {})
+  }, {
+    freezeTableName: true
+  })
   contents.associate = function (models) {
     // associations can be defined here
     contents.belongsTo(models.users, {

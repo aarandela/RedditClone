@@ -6,11 +6,24 @@ const app = express()
 const db = require('./db')
 const UserDetails = require('./models').users
 const router = require('./server/routes/index')
+const exphbs = require('express-handlebars')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => res.sendFile('./html/auth.html', { root: __dirname }))
+app.engine('.hbs', exphbs({
+  extname: '.hbs',
+  defaultLayout: 'main'
+  // layoutsDir: __dirname + '/views/layouts'
+}))
+
+app.set('view engine', '.hbs')
+
+app.get('/', (req, res) => res.render('home', {
+  message: 'Hello world',
+  subheading: 'hello from expressJS'
+})
+)
 
 app.use('/', router)
 
@@ -18,11 +31,6 @@ const port = process.env.PORT || 3000
 app.listen(port, () => console.log('App listening on port ' + port))
 
 /*  SEQUELIZE SETUP */
-
-// const UserDetails = db.define('user', {
-//   username: Sequelize.STRING,
-//   password: Sequelize.STRING
-// })
 
 db.authenticate()
   .then(() => {
@@ -58,7 +66,7 @@ passport.use(new LocalStrategy(
     UserDetails.findOne({ where: { username: username } })
       .then(function (users) {
         if (!users) {
-          return done(null, false, { message: 'Incorrect username.' })
+          return done(null, false, { message: 'Username not found.' })
         }
         if (!users.password === password) {
           return done(null, false, { message: 'Incorrect password.' })
