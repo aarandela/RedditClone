@@ -1,4 +1,4 @@
-node_modules
-migrations
-seeders
+/node_modules
+/migrations
+/seeders
 
