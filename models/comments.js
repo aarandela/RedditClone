@@ -1,7 +1,6 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
   const comments = sequelize.define('comments', {
-    user_id: DataTypes.INTEGER,
     text: DataTypes.STRING
   }, {
     freezeTableName: true

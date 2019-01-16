@@ -1,56 +1,8 @@
-# Spreddit
+[![Build Status](https://travis-ci.org/aarandela/spreddit.svg?branch=master)](https://travis-ci.org/aarandela/spreddit)
+
+# spreddit
 
 Simple clone of 'The front page of the Internet', Reddit. The purpose of this project is for learning purposes only!
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-Fork and clone
-
-Install all the modules using Node.js
-
-```
-npm i pg sequelize express handlebars passport
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
@@ -77,7 +29,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Audy Arandela** - *Initial work* - [Aarandela](https://github.com/aarandela)
+* **Audy Arandela** - [Aarandela](https://github.com/aarandela)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -87,6 +39,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Pros and cons to working alone

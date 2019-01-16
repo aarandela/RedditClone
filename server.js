@@ -7,23 +7,27 @@ const db = require('./db')
 const UserDetails = require('./models').users
 const router = require('./server/routes/index')
 const exphbs = require('express-handlebars')
+const path = require('path')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.engine('.hbs', exphbs({
   extname: '.hbs',
-  defaultLayout: 'main'
-  // layoutsDir: __dirname + '/views/layouts'
+  defaultLayout: 'main',
+  layoutsDir: path.join(__dirname, 'views/layouts'),
+  partialsDir: path.join(__dirname, 'views/partials')
 }))
 
 app.set('view engine', '.hbs')
 
-app.get('/', (req, res) => res.render('home', {
-  message: 'Hello world',
-  subheading: 'hello from expressJS'
-})
-)
+router.get('/', (req, res) => res.render('home'))
+
+app.get('/create_text', (req, res) => res.render('create_content_text'))
+
+app.get('/create_url', (req, res) => res.render('create_content_url'))
+
+app.get('/login', (req, res) => res.render('login'))
 
 app.use('/', router)
 

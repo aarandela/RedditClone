@@ -3,18 +3,15 @@ module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
     username: DataTypes.STRING,
     password: DataTypes.STRING
-  }, {
-    freezeTableName: true
-  })
+  }, {}
+  )
   users.associate = function (models) {
     // associations can be defined here
     users.hasMany(models.comments, {
-      foreignKey: 'user_id',
-      as: 'commented'
+      foreignKey: 'user_id'
     })
     users.hasMany(models.contents, {
-      foreignKey: 'user_id',
-      as: 'OP'
+      foreignKey: 'user_id'
     })
   }
   return users

@@ -1,5 +1,4 @@
 const contents = require('../../models').contents
-const users = require('../../models').users
 
 module.exports = {
   add (req, res) {
@@ -36,13 +35,9 @@ module.exports = {
   list (req, res) {
     return contents
       .findAll({
-        attributes: ['title', 'url'],
-        include: {
-          model: users,
-          attributes: ['id']
-        }
+        attributes: ['title', 'url']
       })
-      .then((contents) => res.status(200).send(contents))
+      .then((contents) => res.status(200).send(contents))// render here?
       .catch((error) => { res.status(400).send(error) })
   }
 
