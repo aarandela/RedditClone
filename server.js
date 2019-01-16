@@ -23,11 +23,13 @@ app.set('view engine', '.hbs')
 
 router.get('/', (req, res) => res.render('home'))
 
-app.get('/create_text', (req, res) => res.render('create_content_text'))
+router.get('/create_text', (req, res) => res.render('create_content_text'))
 
-app.get('/create_url', (req, res) => res.render('create_content_url'))
+router.get('/create_url', (req, res) => res.render('create_content_url'))
 
-app.get('/login', (req, res) => res.render('login'))
+router.get('/comments', (req, res) => res.render('comments'))
+
+router.get('/login', (req, res) => res.render('login'))
 
 app.use('/', router)
 
@@ -110,5 +112,5 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/error' }),
   function (req, res) {
-    res.redirect('/success')
+    res.redirect('/')
   })

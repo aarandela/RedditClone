@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     contents.belongsTo(models.users, {
       foreignKey: 'user_id'
     })
+    contents.hasMany(models.comments, {
+      foreignKey: 'content_id'
+    })
   }
   return contents
 }

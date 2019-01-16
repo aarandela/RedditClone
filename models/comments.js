@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     comments.belongsTo(models.users, {
       foreignKey: 'user_id'
     })
+    comments.belongsTo(models.contents, {
+      foreignKey: 'content_id'
+    })
   }
   return comments
 }
