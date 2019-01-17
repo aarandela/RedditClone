@@ -1,9 +1,19 @@
 const contents = require('../../models').contents
-let arrContents = []
+const users = require('../../models').users
 
 module.exports = {
-  add (req, res) {
+  addTextView (req, res) {
+    // TODO: Auth to post stuff
+    // return users.findOne({ where: { username: req.params.username } })
+    //   .then(() => {
+    //     if (!result) {
+    //       return res.status(404).send('You muse be signed in')
+    //     }
+    return res.render('./create_content_text')
+  },
+
   // Save to PostgreSQL database
+  addText (req, res) {
     return contents
       .create({
         title: req.body.title,
@@ -11,14 +21,33 @@ module.exports = {
       })
 
     // send result to client
-      .then(function () {
-        console.log('added', req.body.title, 'and', req.body.url)
+      .then(function (contents) {
+        console.log('added title', req.body.title, 'and text/url', req.body.url)
         res.status(303).redirect('/')
       })
       .catch(function (error) {
         res.status(400).send(error)
       })
   },
+
+  // addURL (req, res) {
+  //   // Save to PostgreSQL database
+  //   return contents
+  //     .create({
+  //       title: req.body.title,
+  //       url: req.body.url
+  //     })
+
+  //     // send result to client
+  //     .then(function (contents) {
+  //       res.render('./create_context_url')
+  //       console.log('added', req.body.title, 'and', req.body.url)
+  //       res.status(303).redirect('/')
+  //     })
+  //     .catch(function (error) {
+  //       res.status(400).send(error)
+  //     })
+  // },
 
   getById (req, res) {
     return contents
@@ -40,9 +69,7 @@ module.exports = {
         attributes: ['title', 'url']
       })
       .then((contents) =>
-
         res.render('./home', { contents })
-
       )
     // res.status(200).send(contents))
       // render here?

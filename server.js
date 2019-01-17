@@ -4,12 +4,11 @@
 const express = require('express')
 const app = express()
 const db = require('./db')
-const UserDetails = require('./models').users
 const router = require('./server/routes/index')
 const exphbs = require('express-handlebars')
 const path = require('path')
-
 const bodyParser = require('body-parser')
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.engine('.hbs', exphbs({
@@ -21,13 +20,13 @@ app.engine('.hbs', exphbs({
 
 app.set('view engine', '.hbs')
 
-// app.use('/', router)
+app.use('/', router)
 
-app.get('/', router)
-// app.get('/create_text', (req, res) => res.render('create_content_text'))
-// app.get('/create_url', (req, res) => res.render('create_content_url'))
-// app.get('/comments', (req, res) => res.render('comments'))
-// app.get('/login', (req, res) => res.render('login'))
+app.use('/create_text', router)
+app.get('/create_url', (req, res) => res.render('create_content_url'))
+app.get('/comments', (req, res) => res.render('comments'))
+app.get('/login', (req, res) => res.render('login'))
+app.get('/signup', (req, res) => res.render('signup'))
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log('App listening on port ' + port))
@@ -62,6 +61,7 @@ passport.deserializeUser(function (obj, cb) {
 /* PASSPORT LOCAL AUTHENTICATION */
 
 const LocalStrategy = require('passport-local').Strategy
+const UserDetails = require('./models').users
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
@@ -82,7 +82,7 @@ passport.use(new LocalStrategy(
 app.post('/',
   passport.authenticate('local', { failureRedirect: '/error' }),
   function (req, res) {
-    res.redirect('/success?username=' + req.user.username)
+    res.redirect('/')
   })
 
 /*  FACEBOOK AUTH  */
