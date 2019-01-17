@@ -6,7 +6,7 @@ const usersController = require('../controllers').users
 const commentsController = require('../controllers').comments
 
 // Content Router
-router.get('/api/contents', contentsController.list)
+router.get('/', contentsController.list)
 router.get('/api/contents/:id', contentsController.getById)
 router.post('/api/contents', contentsController.add)
 

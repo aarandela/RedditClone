@@ -1,11 +1,13 @@
 {{> header}}
-<div class="container" href="" >
-      <div class="notification" style="margin: 0">
-        <h2>{{{title}}}</h2>
-      </div>
-      <div class="container">
+
+{{#each contents}}
+<div class="container is-size-2" href="/content.id" >
+    <h2>{{this.title}}</h2>
+   
+      <div class="container is-size-6">
         <div class="notification">
           submitted by ...
         </div>
     
   </div>
+{{/each}}

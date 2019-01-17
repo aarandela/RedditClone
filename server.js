@@ -21,17 +21,13 @@ app.engine('.hbs', exphbs({
 
 app.set('view engine', '.hbs')
 
-router.get('/', (req, res) => res.render('home'))
+// app.use('/', router)
 
-router.get('/create_text', (req, res) => res.render('create_content_text'))
-
-router.get('/create_url', (req, res) => res.render('create_content_url'))
-
-router.get('/comments', (req, res) => res.render('comments'))
-
-router.get('/login', (req, res) => res.render('login'))
-
-app.use('/', router)
+app.get('/', router)
+// app.get('/create_text', (req, res) => res.render('create_content_text'))
+// app.get('/create_url', (req, res) => res.render('create_content_url'))
+// app.get('/comments', (req, res) => res.render('comments'))
+// app.get('/login', (req, res) => res.render('login'))
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log('App listening on port ' + port))

@@ -6,11 +6,10 @@ module.exports = {
     return comments
       .create({
         text: req.body.text
-      },
-      console.log(req.body))
+      })
     // send result to client
-      .then(function (result) {
-        res.status(201).json(result)
+      .then(function () {
+        res.status(303).redirect(req.get('referer'))
       })
       .catch(function (error) {
         res.status(400).send(error)
@@ -24,20 +23,20 @@ module.exports = {
       })
       .then((comments) => res.status(200).send(comments))
       .catch((error) => { res.status(400).send(error) })
-  }
+  },
 
-  // update (req, res) {
-  //   return comments
-  //     .update({
-  //       text: req.body.text
-  //     })
-  //     .then(function (result) {
-  //       res.json(result)
-  //     })
-  //     .catch(function (error) {
-  //       res.send(error)
-  //     })
-  // }
+  update (req, res) {
+    return comments
+      .update({
+        text: req.params.id
+      })
+      .then(function () {
+        res.status(303).redirect(req.get('referer'))
+      })
+      .catch(function (error) {
+        res.send(error)
+      })
+  }
 
   // delete (req, res) {
   //   return comments
