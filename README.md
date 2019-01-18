@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/aarandela/spreddit.svg?branch=master)](https://travis-ci.org/aarandela/spreddit)
-
 # spreddit
 
 Simple clone of 'The front page of the Internet', Reddit. The purpose of this project is for learning purposes only!
