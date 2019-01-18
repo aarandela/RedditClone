@@ -15,6 +15,13 @@
               </a>
             </div>
           </div> 
+          <div class="navbar-item">
+              <div class="buttons">
+                <a id=postBtn class="button is-primary">
+                  <strong>Create post</strong>
+                </a>
+              </div>
+          </div>
         </div>
         <div id="navbarBasicExample" class="navbar-menu"></div>
           <div class="navbar-end">
@@ -43,6 +50,9 @@
   })
     $('#signupBtn').click(function () {
       document.location.href = ('./signup')
+  })
+   $('#postBtn').click(function () {
+      document.location.href = ('./create_text')
   })
 })
   </script>

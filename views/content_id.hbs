@@ -1,0 +1,22 @@
+{{> header}}
+
+<div class="container is-size-2" href="" >
+    <h2>{{title}}</h2>
+   
+      <div class="container is-size-6">
+        <div class="notification">
+          {{{url}}}url/text goes here
+        </div>
+  </div>
+
+ <form action="/api/comments/:id" method="post">
+    <div class="container">
+      {{!-- TODO: add in username --}}
+            <label>Comment as ...</label> 
+              <textarea id=title class="textarea" type="text" name="text" placeholder="What are your thoughts?"></textarea>
+            <div class="control">
+              <button id=contentBtn class="button is-primary">Submit</button>
+            </div>
+        </div>
+  </form>
+

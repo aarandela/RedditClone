@@ -1,12 +1,13 @@
 {{> header}}
 
 {{#each contents}}
-<div class="container is-size-2" href="/content.id" >
-    <h2>{{this.title}}</h2>
+<div class="container is-size-2" >
+  
+    <a href='/api/contents/{{this.id}}'><h2>{{this.title}}</h2></a>
    
       <div class="container is-size-6">
         <div class="notification">
-          submitted by ...
+          {{this.url}}
         </div>
     
   </div>

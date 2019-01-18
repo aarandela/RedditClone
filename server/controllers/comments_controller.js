@@ -1,6 +1,49 @@
 const comments = require('../../models').comments
+const users = require('../../models').users
+const contents = require('../../models').contents
 
 module.exports = {
+//   check (req, res) {
+//     return users
+//       .find({
+//         username: req.session.user
+//       }), function (err, doc) {
+//       if (err) throw err
+
+  //       if (doc.length) {
+  //         res.send(doc)
+  //       }
+  //     }
+  //   }
+  // },
+
+  edit (req, res) {
+    return comments
+      .update({
+        _id: req.params.id
+      }, {
+        url: req.body.url
+      }, function (err, result) {
+        if (err) throw err
+
+        console.log(`[${req.params.id}] comment was edited`)
+        res.send('success')
+      })
+  },
+
+  delete (req, res) {
+    return comments
+      .find({
+        _id: req.params.id
+      })
+      .remove(function (err, doc) {
+        if (err) throw err
+
+        console.log(`[${req.params.id}] comment deleted`)
+        res.send('OK')
+      })
+  },
+
   add (req, res) {
   // Save to PostgreSQL database
     return comments
@@ -21,27 +64,7 @@ module.exports = {
       .findAll({
         attributes: ['text']
       })
-      .then((comments) => res.render('./comments'))
+      .then((comments) => res.render('./content_id'), { comments })
       .catch((error) => { res.status(400).send(error) })
-  }// ,
-  // update (req, res) {
-  //   return comments
-  //     .update({
-  //       text: req.params.id
-  //     })
-  //     .then(function () {
-  //       res.status(303).redirect(req.get('referer'))
-  //     })
-  //     .catch(function (error) {
-  //       res.send(error)
-  //     })
-  // }
-
-  // delete (req, res) {
-  //   return comments
-  //     .findOne({
-  //       where:
-  //     })
-  // }
-
+  }
 }

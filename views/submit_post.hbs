@@ -1,15 +1,12 @@
- {{>header}}
- 
-    <form action="/api/contents" method="post">
+{{>header}}
+    <form action="/submit/post" method="post">
          <div class="container">
             <label>Title</label>
               <input id=title class="input" type="text" name="title" placeholder="Title">
-            <label>URL</label>
-              <input id=text class="input" placeholder="URL" name="url"></input>
+            <label>Text</label>
+              <input id=text class="input" placeholder="say what you want" name="url"></input>
             <div class="control">
               <button id=contentBtn class="button is-primary">Submit</button>
             </div>
         </div>
     </form>
- 
-   
