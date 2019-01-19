@@ -9,7 +9,7 @@
         </div>
   </div>
 
- <form action="/post/comments/:id" method="post">
+ <form action="/post/comments/{{id}}" method="post">
     <div class="container">
       {{!-- TODO: add in username --}}
             <label>Comment as ...</label> 
@@ -24,7 +24,7 @@
 {{#each comments}}
 <div class="container is-size-6">
         <div class="notification">
-          {{text}}
+          {{this.text}}
         </div>
 </div>
 {{/each}}

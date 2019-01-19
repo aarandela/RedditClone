@@ -6,21 +6,21 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     freezeTableName: true
   }
-  // , {
-  //   createdAt: {
-  //     allowNull: false,
-  //     type: DataTypes.DATE,
-  //     createdAt: DataTypes.DATE,
-  //     updatedAt: DataTypes.DATE
-  //   }
-  // }, {
-  //   updatedAt: {
-  //     allowNull: false,
-  //     type: DataTypes.DATE,
-  //     createdAt: DataTypes.DATE,
-  //     updatedAt: DataTypes.DATE
-  //   }
-  // }
+  , {
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATEONLY,
+      createdAt: DataTypes.DATEONLY,
+      updatedAt: DataTypes.DATEONLY
+    }
+  }, {
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATEONLY,
+      createdAt: DataTypes.DATEONLY,
+      updatedAt: DataTypes.DATEONLY
+    }
+  }
   )
   contents.associate = function (models) {
     // associations can be defined here

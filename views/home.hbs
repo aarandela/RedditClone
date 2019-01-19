@@ -3,11 +3,11 @@
 {{#each contents}}
 <div class="container is-size-2" >
   
-    <a href='/contents/{{this.id}}'><h2>{{this.title}}</h2></a>
+    <a href='/post/{{this.id}}'><h2>{{this.title}}</h2></a>
    
       <div class="container is-size-6">
         <div class="notification">
-          submitted on {{this.createdAt}}
+          submitted on {{this.createdAt}} by {{this.user_id}}
         </div>
     
   </div>

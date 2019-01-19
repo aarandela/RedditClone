@@ -1,6 +1,7 @@
 const contents = require('../../models').contents
 const users = require('../../models').users
 const comments = require('../../models').comments
+const moment = require('moment')
 
 module.exports = {
   edit (res, req) {
@@ -76,11 +77,9 @@ module.exports = {
         order: [['createdAt', 'DESC']],
         attributes: ['id', 'title', 'url', 'createdAt']
       })
-      .then((contents) =>
+      .then((contents) => {
         res.render('./home', { contents })
-      )
-    // res.status(200).send(contents))
-      // render here?
+      })
       .catch((error) => { res.status(400).send(error) })
   }
 }
