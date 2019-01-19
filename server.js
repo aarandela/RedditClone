@@ -4,7 +4,6 @@ const db = require('./server/db')
 const exphbs = require('express-handlebars')
 const path = require('path')
 const bodyParser = require('body-parser')
-const users = require('./models/users')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -17,15 +16,10 @@ app.engine('.hbs', exphbs({
 
 app.set('view engine', '.hbs')
 
+// ROUTES
 app.use('/', require('./server/routes/frontpage'))
 app.use('/', require('./server/routes/index'))
-app.use('/signup', require('./server/routes/auth'))
-app.use('/login', require('./server/routes/auth'))
-
-const port = process.env.PORT || 3000
-app.listen(port, () => console.log('App listening on port ' + port))
-
-/*  SEQUELIZE SETUP */
+app.use('/', require('./server/routes/auth'))
 
 db.authenticate()
   .then(() => {
@@ -34,3 +28,6 @@ db.authenticate()
   .catch(err => {
     console.error('Unable to connect to the database:', err)
   })
+
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log('App listening on port ' + port))

@@ -1,9 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const app = express()
+const validator = require('validator')
 
 const users = require('../../models/users')
 const usersController = require('../controllers').users
+
+// ROUTES FOR PAGES
+router.post('/signup', usersController.add)
+router.post('/login', usersController.login)
+router.get('/signup', usersController.checkSignUp)
+router.get('/logout', usersController.logout)
+router.get('/login', usersController.checkLogin)
 
 /*  PASSPORT SETUP  */
 const passport = require('passport')
@@ -34,11 +42,11 @@ passport.use(new LocalStrategy(
       .catch(err => done(err))
   }
 ))
-// app.post('/login',
-//   passport.authenticate('local', { failureRedirect: '/error' }),
-//   function (req, res) {
-//     res.redirect('/')
-//   })
+app.post('/login',
+  passport.authenticate('local', { failureRedirect: '/error' }),
+  function (req, res) {
+    res.redirect('/')
+  })
 /*  FACEBOOK AUTH  */
 const FacebookStrategy = require('passport-facebook').Strategy
 const FACEBOOK_APP_ID = '355132191707152'
@@ -59,11 +67,21 @@ app.get('/auth/facebook/callback',
     res.redirect('/')
   })
 
-// ROUTES FOR PAGES
-router.post('/signup', usersController.add)
-router.post('/login', usersController.login)
-router.get('/signup', usersController.checkSignUp)
-router.get('/logout', usersController.logout)
-router.get('/login', usersController.checkLogin)
+// MIDDLEWARE
+// function validateRegister () {
+//   return function (req, res, next) {
+//     // make input not case sensitive
+//     req.body.username = req.body.username.toLowerCase()
+//     req.body.password = req.body.password.toLowerCase()
+
+//     if (validator.isAlphanumeric(req.body.username)) {
+//       console.log('authentication = ' + req.isAuthenticated())
+//       return next()
+//     }
+//     res.render('./auth/auth_register', {
+//       message: 'Invalid input. Try again.'
+//     })
+//   }
+// }
 
 module.exports = router

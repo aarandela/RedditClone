@@ -14,5 +14,6 @@ router.post('/post/comments/:id', commentsController.add)
 router.get('/post/comments/:id', commentsController.list)
 router.put('/edit/comment/:id', commentsController.edit)
 router.delete('/delete/comment/:id', commentsController.delete)
+// router.get('/signup', (req, res) => res.render('./auth/signup'))
 
 module.exports = router
