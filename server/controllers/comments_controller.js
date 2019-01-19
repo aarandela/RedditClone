@@ -3,20 +3,6 @@ const users = require('../../models').users
 const contents = require('../../models').contents
 
 module.exports = {
-//   check (req, res) {
-//     return users
-//       .find({
-//         username: req.session.user
-//       }), function (err, doc) {
-//       if (err) throw err
-
-  //       if (doc.length) {
-  //         res.send(doc)
-  //       }
-  //     }
-  //   }
-  // },
-
   edit (req, res) {
     return comments
       .update({

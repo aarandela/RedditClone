@@ -1,4 +1,6 @@
 const contents = require('../../models').contents
+const users = require('../../models').users
+const comments = require('../../models').comments
 
 module.exports = {
   edit (res, req) {
@@ -51,14 +53,19 @@ module.exports = {
 
   getById (req, res) {
     return contents
-      .find({ where: { id: req.params.id } })
+      .findOne({ where: { id: req.params.id } })
       .then((contents) => {
         if (!contents) {
           return res.status(404).send({
             message: 'Contents Not Found'
           })
         }
-        return res.render('./content_id', { contents })
+        return res.render('./content_id', {
+          title: contents.title,
+          url: contents.url,
+          username: users.username,
+          text: comments.text
+        })
       })
       .catch((error) => res.status(400).send(error))
   },
@@ -66,7 +73,8 @@ module.exports = {
   list (req, res) {
     return contents
       .findAll({
-        attributes: ['title', 'url']
+        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'title', 'url', 'createdAt']
       })
       .then((contents) =>
         res.render('./home', { contents })

@@ -24,9 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     users.hasMany(models.comments, {
       foreignKey: 'user_id'
     })
-    users.hasMany(models.contents, {
-      foreignKey: 'user_id'
-    })
+    // users.hasMany(models.contents, {
+    //   foreignKey: 'user_id'
+    // })
   }
   return users
 }

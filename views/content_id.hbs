@@ -5,11 +5,11 @@
    
       <div class="container is-size-6">
         <div class="notification">
-          {{{url}}}url/text goes here
+          {{url}}
         </div>
   </div>
 
- <form action="/api/comments/:id" method="post">
+ <form action="/post/comments/:id" method="post">
     <div class="container">
       {{!-- TODO: add in username --}}
             <label>Comment as ...</label> 
@@ -20,3 +20,11 @@
         </div>
   </form>
 
+{{!-- list the comments here --}}
+{{#each comments}}
+<div class="container is-size-6">
+        <div class="notification">
+          {{text}}
+        </div>
+</div>
+{{/each}}

@@ -5,27 +5,28 @@ module.exports = (sequelize, DataTypes) => {
     url: DataTypes.STRING
   }, {
     freezeTableName: true
-  }, {
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
-    }
-  }, {
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
-    }
   }
+  // , {
+  //   createdAt: {
+  //     allowNull: false,
+  //     type: DataTypes.DATE,
+  //     createdAt: DataTypes.DATE,
+  //     updatedAt: DataTypes.DATE
+  //   }
+  // }, {
+  //   updatedAt: {
+  //     allowNull: false,
+  //     type: DataTypes.DATE,
+  //     createdAt: DataTypes.DATE,
+  //     updatedAt: DataTypes.DATE
+  //   }
+  // }
   )
   contents.associate = function (models) {
     // associations can be defined here
-    contents.belongsTo(models.users, {
-      foreignKey: 'user_id'
-    })
+    // contents.belongsTo(models.users, {
+    //   foreignKey: 'user_id'
+    // })
     contents.hasMany(models.comments, {
       foreignKey: 'content_id'
     })
