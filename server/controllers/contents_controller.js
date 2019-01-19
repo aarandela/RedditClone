@@ -23,7 +23,7 @@ module.exports = {
       .find({
         _id: req.params.id
       })
-      .remove(function (err, doc) {
+      .destroy(function (err, doc) {
         if (err) throw err
 
         console.log(`[${req.params.id}] post deleted!`)
