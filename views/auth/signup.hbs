@@ -1,27 +1,21 @@
  {{>header}}
  <form action="/signup" method="post">
-  <div class="field">
-  <p class="control has-icons-left has-icons-right">
-    <input class="input" type="username" placeholder="Username">
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-  </p>
-</div>
-<div class="field">
-  <p class="control has-icons-left">
-    <input class="input" type="password" placeholder="Password">
-    <span class="icon is-small is-left">
-      <i class="fas fa-lock"></i>
-    </span>
-  </p>
-</div>
-<div class="field">
-  <p class="control">
-    <button class="button is-success">
-      Login
-    </button>
-  </p>
-</div> <span id="lower">Already a member? <a href="/login">Log in</a></span>
-</form>
-    <a href=auth/facebook>Sign in with Facebook</a>
+      <div>
+        <label>Username:</label>
+        <input id=username type="text" name="username" placeholder="username"/>
+        <br/>
+      </div>
+      <div>
+        <label>Password:</label>
+        <input id=pw type="password" name="password" placeholder="password"/>
+      </div>
+      <div>
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
+    </div> 
+    <div>
+      <span id="lower">Already a member? <a href="/login">Log in</a></span>
+
+    </div>
+    <a href=auth/facebook>Sign up with Facebook</a>

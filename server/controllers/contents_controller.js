@@ -1,29 +1,29 @@
 const contents = require('../../models').contents
 const users = require('../../models').users
 const comments = require('../../models').comments
-const moment = require('moment')
+const passport = require('passport')
 
 module.exports = {
-  edit (res, req) {
+  edit (res, req, nextFn) {
     return contents
-      .update({
-        _id: req.params.id
-      }, {
-        body: req.body.text
-      }, function (err, result) {
-        if (err) throw err
+      .findById(req.params.id)
+      .then(function (post) {
+        if (!post) return nextFn('Post not found')
 
-        console.log(`[${req.params.id}] post edited!`)
-        res.send('success')
+        contents.update({ url: req.body.url },
+          function (err, result) {
+            if (err) throw err
+
+            console.log(`[${req.params.id}] post edited!`)
+            res.send('success')
+          })
       })
   },
 
   delete (req, res) {
     return contents
-      .find({
-        _id: req.params.id
-      })
-      .destroy(function (err, doc) {
+      .destroy({ where: { id: req.params.id }, truncate: { cascade: true } })
+      .then(function (err, doc) {
         if (err) throw err
 
         console.log(`[${req.params.id}] post deleted!`)
@@ -36,6 +36,7 @@ module.exports = {
       .create({
         title: req.body.title,
         url: req.body.url
+        // userID: req.session.id
       })
 
     // send result to client
@@ -75,7 +76,7 @@ module.exports = {
     return contents
       .findAll({
         order: [['createdAt', 'DESC']],
-        attributes: ['id', 'title', 'url', 'createdAt']
+        attributes: ['id', 'title', 'url', 'userID', 'createdAt']
       })
       .then((contents) => {
         res.render('./home', { contents })
