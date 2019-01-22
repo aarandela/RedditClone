@@ -10,19 +10,15 @@
       <div> <button id=editBtn class="button">Edit</button> 
        <button id=deleteBtn class="button">Delete</button></div> 
            
-        </div>
-   
-          
-
-        
+        </div>  
        
    
   </div>
 
- <form action="/post/{{id}}/comments/{{id}}" method="post">
+ <form action="/post/comments/{{contents.id}}" method="post">
     <div class="container">
       {{!-- TODO: add in username --}}
-            <label>Comment as ...</label> 
+            <label>Comment as {{req.user.username}}</label> 
               <textarea id=title class="textarea" type="text" name="text" placeholder="What are your thoughts?"></textarea>
            
               <button id=contentBtn class="button is-primary">Submit</button>
@@ -46,8 +42,16 @@
   <script type='text/javascript'>
   const contents = require('../server/controllers').contents_controller
   $('document').ready(function () {
-    $('#deleteBtn').click(function () {
-      contents.delete
+    $('#deleteBtn').click(function (req, res) {
+    return contents
+      .destroy({ where: { id: req.params.id }, truncate: { cascade: true } })
+      .then(function (err, doc) {
+        if (err) throw err
+
+        console.log(`[${req.params.id}] post deleted!`)
+        res.send(doc)
+      })
+  }
 })
 $('document').ready(function () {
     $('#editBtn').click(function () {

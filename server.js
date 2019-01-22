@@ -122,11 +122,22 @@ function (accessToken, refreshToken, profile, cb) {
 }
 ))
 
+app.get('/auth/facebook',
+  passport.authenticate('facebook'))
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/error' }),
+  function (req, res) {
+    res.redirect('/success')
+  })
+
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
-  console.log('req.session: ', req.session, req.user)
+  console.log('req.sessionID: ', req.session.id)
+  console.log('username: ', req.user.username)
+  console.log('req.isAuthenticated: ', req.isAuthenticated())
   if (req.user) {
     console.log('logged in')
-    res.redirect(200, '/')
+    res.redirect('../')
   } else {
     res.redirect(404, { message: 'invalid ' })
   }
@@ -146,39 +157,33 @@ app.post('/signup', function (req, res, next) {
     res.render('./auth/signup', { validate: 'Password must be longer than 6 characters.' })
   } else {
     users.findOne({ where: { username: req.body.username } })
-      .then((user) => {
-        console.log(user)
-        if (user !== null) {
-          console.log('username is already in use.')
-          res.render('./auth/signup', { validate: user.dataValues.username + ' is already in use.' })
+      .then(function (doc) {
+      // if user already exists, register page is rendered with error message
+        if (doc !== null) {
+          console.log('username in use')
+          res.render('./auth/signup', { validate: doc.dataValues.username + ' is already in use.' })
         } else {
           users.create({
             username: req.body.username,
             password: req.body.password
           })
             .then((user) => {
-              console.log('user: ', user)
-              res.render('./auth/login', { signup: 'Account has been created. Please login.' })
+              // create session using passport js
+              req.login(user.id, function (err) {
+                if (err) throw err
+
+                req.session.user = req.body.username
+                console.log(`[Auth] ${req.session.user} has registered`)
+                console.log('sessionID: ', req.session)
+                console.log('is auth? : ', req.isAuthenticated())
+                res.redirect('../')
+              })
             })
-            .catch((err) => {
-              console.log('error: ', err)
-            })
+            .catch((error) => res.status(400).send(error))
         }
-      })
-      .catch((err) => {
-        console.log('error :', err)
       })
   }
 })
-
-app.get('/auth/facebook',
-  passport.authenticate('facebook'))
-
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/error' }),
-  function (req, res) {
-    res.redirect('/success')
-  })
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log('App listening on port ' + port))

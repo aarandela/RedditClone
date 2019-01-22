@@ -35,8 +35,8 @@ module.exports = {
     return contents
       .create({
         title: req.body.title,
-        url: req.body.url
-        // userID: req.session.id
+        url: req.body.url,
+        userID: req.user.id
       })
 
     // send result to client

@@ -17,46 +17,37 @@
           </div> 
           <div class="navbar-item">
               <div class="buttons">
-                <a id=postBtn class="button is-primary">
+                <a href="/submit/post" class="button is-primary">
                   <strong>Create post</strong>
                 </a>
               </div>
           </div>
         </div>
-        {{!-- if statement !req.sessions.user --}}
-        <div id="navbarBasicExample" class="navbar-menu"></div>
+         {{#if user}}
+            <p class="h5">Welcome {{this.user.username}}</p>
+            <div class="btn-group">
+                    <a href=""><button class="btn btn-outline-primary my-2 my-sm-0" type="button">Shopping Cart</button></a>
+            </div>
+        
+            <a href="/logout">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Logout</button>
+            </a>
+          {{else}}
+            <div id="navbarBasicExample" class="navbar-menu"></div>
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a id=signupBtn class="button is-primary">
+                <a href="/signup" class="button is-primary">
                   <strong>Sign up</strong>
                 </a>
-                <a id=loginBtn class="button is-dark">
+                <a href="/login" class="button is-dark">
                   Log in
                 </a>
               </div>
             </div>
           </div>
-          {{!-- else --}}
-          {{!-- have logout button/function --}}
-          {{!-- /if --}}
         </div>
+          {{/if}}
+        
       </nav>
   </section>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-  <script type='text/javascript'>
-  $('document').ready(function () {
-    $('#loginBtn').click(function () {
-      document.location.href = ('/login')
-  })
-    $('#signupBtn').click(function () {
-      document.location.href = ('/signup')
-  })
-   $('#postBtn').click(function () {
-      document.location.href = ('/submit/post')
-  })
-})
-  </script>

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 
 const contentsController = require('../controllers').contents
 const usersController = require('../controllers').users
@@ -14,7 +15,5 @@ router.post('/post/comments/:id', commentsController.add)
 router.get('/post/comments/:id', commentsController.list)
 router.put('/edit/comment/:id', commentsController.edit)
 router.delete('/delete/comment/:id', commentsController.delete)
-
-// router.get('/signup', (req, res) => res.render('./auth/signup'))
 
 module.exports = router

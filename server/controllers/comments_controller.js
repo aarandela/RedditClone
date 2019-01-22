@@ -35,7 +35,7 @@ module.exports = {
     return comments
       .create({
         text: req.body.text,
-        userID: req.session.userID
+        userID: '21'
       })
     // send result to client
       .then(function () {
@@ -49,7 +49,7 @@ module.exports = {
   list (req, res) {
     return comments
       .findAll({
-        attributes: ['text'] // find using joins
+        attributes: ['id', 'text', 'content_id', 'userID'] // find using joins
       })
       .then((comments) => res.render('./content_id'), { comments })
       .catch((error) => { res.status(400).send(error) })
