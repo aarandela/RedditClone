@@ -69,6 +69,7 @@ Your application **must**:
     - Work on my own pace
     - No need to rely on others to finish to continue next steps and vice-versa
     - Know the code inside and out
+    - Did whatever I want
   * Cons
     - Working alone.
     - Help is limited (even though I can ask others, its not the same as if it was a group)
