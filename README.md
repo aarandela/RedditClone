@@ -73,3 +73,9 @@ Your application **must**:
     - Working alone.
     - Help is limited (even though I can ask others, its not the same as if it was a group)
     - Have to do all of the app myself, no distributing to others
+    
+* Other Thoughts
+  - I thought cloing Reddit would be a simple task... Mistakes were made.
+  - As I started to research and dig into this project, it got more and more complicated. Lots of reading and understanding how the back-end of this site works is beneficial, but time-consuming.
+  - With only 2 weeks (part-time) to hit all the requirements for cloning Reddit, I feel like I bit off more than I can chew.
+  - Eventhough I didn't finish all the requirements, I at least did the 'meat' of the project and I can proudly I am a Full-Stack Web Developer now. (In the libraries I used :P)
