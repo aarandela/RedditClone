@@ -5,13 +5,12 @@ const exphbs = require('express-handlebars')
 const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const validator = require('express-validator')
 const passport = require('passport')
 const users = require('./models').users
+const LocalStrategy = require('passport-local').Strategy
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(validator())
 
 app.engine('.hbs', exphbs({
   extname: '.hbs',
@@ -21,14 +20,6 @@ app.engine('.hbs', exphbs({
 }))
 
 app.set('view engine', '.hbs')
-
-// ROUTES
-app.use('/', require('./server/routes/frontpage'))
-app.use('/', require('./server/routes/index'))
-
-/* Local Auth */
-
-const LocalStrategy = require('passport-local').Strategy
 
 app.use(session({
   secret: 'keyboard cat',
@@ -41,13 +32,13 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 passport.serializeUser(function (userID, cb) {
-  console.log('user: ', userID)
+  console.log('user in serialize: ', userID)
   cb(null, userID.id)
 })
 
 passport.deserializeUser(function (userID, cb) {
   console.log('userdeserialze: ', userID)
-  users.findOne({ where: { userID: userID } })
+  users.findOne({ where: { id: userID } })
     .then((user) => {
       cb(null, user)
     })
@@ -56,6 +47,10 @@ passport.deserializeUser(function (userID, cb) {
       cb(null, false)
     })
 })
+
+// ROUTES
+app.use('/', require('./server/routes/frontpage'))
+app.use('/', require('./server/routes/index'))
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
@@ -82,30 +77,7 @@ app.get('/', function (req, res) {
   res.render('home', { user: req.user })
 })
 
-app.get('/login', function (req, res) {
-  res.render('auth/login')
-})
-
-app.get('/signup', function (req, res) {
-  res.render('auth/signup')
-})
-
-/* Express Validator */
-
-const { body, validationResult } = require('express-validator/check')
-const { sanitizeBody } = require('express-validator/filter')
-
-/* Passport Setup */
-
-app.get('/success', function (req, res) {
-  res.send('success')
-})
-
-app.get('/error', function (req, res) {
-  res.send('Error logging in')
-})
-
-/* Facebook Auth */
+/* Facebook Auth ============================================================================== */
 
 const FacebookStrategy = require('passport-facebook').Strategy
 
@@ -128,12 +100,26 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/error' }),
   function (req, res) {
-    res.redirect('/success')
+    console.log('user in fb callback: ', req.user)
+    res.redirect('/')
   })
+// =======================================================================================
+// LOGIN AND SIGNUP
 
+app.get('/login', function (req, res) {
+  res.render('auth/login')
+})
+
+app.get('/signup', function (req, res) {
+  res.render('auth/signup')
+})
+
+app.get('/error', function (req, res) {
+  res.send('Error logging in')
+})
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
-  console.log('req.sessionID: ', req.session.id)
-  console.log('username: ', req.user.username)
+  // console.log('req.sessionID: ', req.session.id)
+  console.log('username in login: ', req.user)
   console.log('req.isAuthenticated: ', req.isAuthenticated())
   if (req.user) {
     console.log('logged in')
@@ -141,11 +127,6 @@ app.post('/login', passport.authenticate('local'), function (req, res, next) {
   } else {
     res.redirect(404, { message: 'invalid ' })
   }
-})
-
-app.get('/logout', function (req, res) {
-  req.logout()
-  res.redirect('/')
 })
 
 app.post('/signup', function (req, res, next) {
@@ -167,13 +148,11 @@ app.post('/signup', function (req, res, next) {
             username: req.body.username,
             password: req.body.password
           })
-            .then((user) => {
+            .then((result) => {
               // create session using passport js
-              req.login(user.id, function (err) {
+              req.login(result, function (err) {
                 if (err) throw err
-
-                req.session.user = req.body.username
-                console.log(`[Auth] ${req.session.user} has registered`)
+                console.log('user in signup: ', result.dataValues)
                 console.log('sessionID: ', req.session)
                 console.log('is auth? : ', req.isAuthenticated())
                 res.redirect('../')
@@ -183,6 +162,10 @@ app.post('/signup', function (req, res, next) {
         }
       })
   }
+})
+
+app.use(function (req, res, nextFn) {
+  res.locals.isAuthenticated = req.isAuthenticated()
 })
 
 const port = process.env.PORT || 3000

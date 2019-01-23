@@ -27,7 +27,7 @@ module.exports = {
         if (err) throw err
 
         console.log(`[${req.params.id}] post deleted!`)
-        res.send(doc)
+        res.redirect('./')
       })
   },
 
@@ -36,7 +36,7 @@ module.exports = {
       .create({
         title: req.body.title,
         url: req.body.url,
-        userID: req.user.id
+        userID: req.user.dataValues.id
       })
 
     // send result to client
@@ -50,7 +50,7 @@ module.exports = {
   },
 
   addView (req, res) {
-    return res.render('./submit_post')
+    return res.render('./submit_post', { isAuthenticated: !!req.user })
   },
 
   getById (req, res) {
@@ -62,11 +62,14 @@ module.exports = {
             message: 'Contents Not Found'
           })
         }
+        console.log('req.user: ', req.user)
         return res.render('./content_id', {
           title: contents.title,
           url: contents.url,
           username: users.username,
-          text: comments.text
+          text: comments.text,
+          isAuthenticated: !!req.user,
+          comments: comments.list
         })
       })
       .catch((error) => res.status(400).send(error))
@@ -79,7 +82,9 @@ module.exports = {
         attributes: ['id', 'title', 'url', 'userID', 'createdAt']
       })
       .then((contents) => {
-        res.render('./home', { contents })
+        res.render('./home', {
+          contents,
+          isAuthenticated: !!req.user })
       })
       .catch((error) => { res.status(400).send(error) })
   }

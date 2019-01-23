@@ -23,31 +23,32 @@
               </div>
           </div>
         </div>
-         {{#if user}}
-            <p class="h5">Welcome {{this.user.username}}</p>
-            <div class="btn-group">
-                    <a href=""><button class="btn btn-outline-primary my-2 my-sm-0" type="button">Shopping Cart</button></a>
+         {{#if isAuthenticated}}
+         <div id="navbarBasicExample" class="navbar-menu"></div>
+            <div class="navbar-end">
+            <h2>USERNAME HERE {{req.session.passport.username}} </h2>
+            <div class="buttons">
+                <a href="/logout" class="button is-primary">
+                  <strong>Log out</strong>
+                </a>
             </div>
-        
-            <a href="/logout">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Logout</button>
-            </a>
+            </div>
+          
           {{else}}
             <div id="navbarBasicExample" class="navbar-menu"></div>
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a href="/signup" class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a href="/login" class="button is-dark">
-                  Log in
-                </a>
+              <div class="navbar-end">
+                <div class="navbar-item">
+                  <div class="buttons">
+                    <a href="/signup" class="button is-primary">
+                      <strong>Sign up</strong>
+                    </a>
+                    <a href="/login" class="button is-dark">
+                      Log in
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
           </div>
-        </div>
           {{/if}}
-        
       </nav>
   </section>

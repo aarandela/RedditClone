@@ -28,10 +28,9 @@ module.exports = {
   },
 
   logout (req, res) {
-    console.log(`${req.session.user} has logged out`)
-
-    req.session.destroy()
-    res.redirect('./auth/login')
+    req.logout()
+    // req.session.destroy()
+    res.render('./auth/login')
   }
 
 }

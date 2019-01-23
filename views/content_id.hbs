@@ -1,60 +1,39 @@
-{{> header}}
+ {{>header}}
+    <div class="container is-size-2" href="" >
+      <h2>{{title}}</h2>
+        <div class="container is-size-6">
+          <div class="notification">
+            {{url}}
 
-<div class="container is-size-2" href="" >
-    <h2>{{title}}</h2>
-   
-      <div class="container is-size-6">
-        <div class="notification">
-          {{url}}
-{{!-- TODO: if user created the post, render delete and edit button --}}
-      <div> <button id=editBtn class="button">Edit</button> 
-       <button id=deleteBtn class="button">Delete</button></div> 
-           
-        </div>  
-       
-   
-  </div>
-
- <form action="/post/comments/{{contents.id}}" method="post">
-    <div class="container">
-      {{!-- TODO: add in username --}}
-            <label>Comment as {{req.user.username}}</label> 
-              <textarea id=title class="textarea" type="text" name="text" placeholder="What are your thoughts?"></textarea>
-           
-              <button id=contentBtn class="button is-primary">Submit</button>
-         
-        </div>
-  </form>
-
-{{!-- list the comments here --}}
-{{#each comments}}
-<div class="container is-size-6">
-        <div class="notification">
-          {{this.text}}
-        </div>
+    {{#if isAuthenticated}}
+    <div class="buttons">
+      <a href="/edit/post/{{this.id}}" class="button ">
+        <strong>Edit</strong>
+      </a>
+      <a href="/delete/post/{{id}}" class="button ">
+        <strong>Delete</strong>
+      </a>            
+    </div>
+  </div>      
 </div>
-{{/each}}
 
-<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-  <script type='text/javascript'>
-  const contents = require('../server/controllers').contents_controller
-  $('document').ready(function () {
-    $('#deleteBtn').click(function (req, res) {
-    return contents
-      .destroy({ where: { id: req.params.id }, truncate: { cascade: true } })
-      .then(function (err, doc) {
-        if (err) throw err
+  <form action="/post/{{contents.id}}" method="post">
+      <div class="container">
+        {{!-- TODO: add in username --}}
+      <label>Comment as {{req.user.username}}</label> 
+            <textarea id=title class="textarea" type="text" name="text" placeholder="What are your thoughts?"></textarea>
+            <button id=contentBtn class="button is-primary">Submit</button>
+        
+      </div>
+    </form>
+  {{/if}}
 
-        console.log(`[${req.params.id}] post deleted!`)
-        res.send(doc)
-      })
-  }
-})
-$('document').ready(function () {
-    $('#editBtn').click(function () {
-      contents.edit
-})
-  </script>
+  {{!-- list the comments here --}}
+  {{#each comments}}
+  <div class="container is-size-6">
+          <div class="notification">
+            {{this.text}}
+          </div>
+  </div>
+  {{/each}}
+

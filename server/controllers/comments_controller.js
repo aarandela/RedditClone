@@ -51,7 +51,7 @@ module.exports = {
       .findAll({
         attributes: ['id', 'text', 'content_id', 'userID'] // find using joins
       })
-      .then((comments) => res.render('./content_id'), { comments })
+      .then((comments) => res.render('./content_id'), { comments, isAuthenticated: !!req.user })
       .catch((error) => { res.status(400).send(error) })
   }
 }

@@ -11,9 +11,12 @@ router.put('/edit/post/:id', contentsController.edit)
 router.delete('/delete/post/:id', contentsController.delete)
 
 // COMMENTS ROUTES
-router.post('/post/comments/:id', commentsController.add)
-router.get('/post/comments/:id', commentsController.list)
-router.put('/edit/comment/:id', commentsController.edit)
-router.delete('/delete/comment/:id', commentsController.delete)
+router.post('/post/:id', commentsController.add)
+router.get('/post/:id', commentsController.list)
+router.put('/edit/:id', commentsController.edit)
+router.delete('/delete/:id', commentsController.delete)
+
+// LOGOUT
+router.get('/logout', usersController.logout)
 
 module.exports = router
