@@ -4,31 +4,54 @@ const comments = require('../../models').comments
 const passport = require('passport')
 
 module.exports = {
-  edit (res, req, nextFn) {
+  editView (req, res) {
     return contents
-      .findById(req.params.id)
-      .then(function (post) {
-        if (!post) return nextFn('Post not found')
-
-        contents.update({ url: req.body.url },
-          function (err, result) {
-            if (err) throw err
-
-            console.log(`[${req.params.id}] post edited!`)
-            res.send('success')
+      .findOne({ where: { id: req.params.id } })
+      .then((contents) => {
+        if (!contents) {
+          return res.status(404).send({
+            message: 'Contents Not Found'
           })
+        }
+        // console.log('req.user: ', req.user)
+        console.log('username would be: ', req.user.dataValues.username, ' in getbyID contents_controller')
+        return res.render('./editcontent', {
+          title: contents.title,
+          url: contents.url,
+          id: req.params.id,
+          isAuthenticated: !!req.user
+        })
       })
   },
 
-  delete (req, res) {
-    return contents
-      .destroy({ where: { id: req.params.id }, truncate: { cascade: true } })
-      .then(function (err, doc) {
-        if (err) throw err
+  edit (res, req, nextFn) {
+    return contents.findOne({ where: { id: req.params.id } })
+      .then((contents) =>
+        contents.update(
+          { url: req.body.url }
+          // { where: { id: req.params.id },
+          //   returning: true }
+        )
+          .then(function (err, result) {
+            if (err) throw err
+            console.log(result)
+            console.log(`[${req.params.id}] post edited!`)
+            res.redirect('../')
+          })
+      )
+  },
 
-        console.log(`[${req.params.id}] post deleted!`)
-        res.redirect('./')
-      })
+  delete (req, res) {
+    return contents.findOne({ where: { id: req.params.id } })
+      .then((contents) =>
+        contents.destroy()
+          .then(function (err, doc) {
+            if (err) throw err
+
+            console.log(`[${req.params.id}] post deleted!`)
+            res.redirect('/')
+          })
+      )
   },
 
   add (req, res) {
@@ -58,18 +81,17 @@ module.exports = {
       .findOne({ where: { id: req.params.id } })
       .then((contents) => {
         if (!contents) {
-          return res.status(404).send({
-            message: 'Contents Not Found'
-          })
+          return res.status(404).send('no contents')
         }
-        console.log('req.user: ', req.user)
+        // console.log('req.user: ', req.user)
+        console.log('username would be: ', req.user.dataValues.username, ' in getbyID contents_controller')
         return res.render('./content_id', {
           title: contents.title,
           url: contents.url,
-          username: users.username,
-          text: comments.text,
+          id: req.params.id,
           isAuthenticated: !!req.user,
-          comments: comments.list
+          isUser: (req.user.id === contents.userID),
+          listComments: comments.list
         })
       })
       .catch((error) => res.status(400).send(error))
@@ -82,9 +104,12 @@ module.exports = {
         attributes: ['id', 'title', 'url', 'userID', 'createdAt']
       })
       .then((contents) => {
+        // console.log(contents)
         res.render('./home', {
           contents,
-          isAuthenticated: !!req.user })
+          isAuthenticated: !!req.user
+          // username: req.user.dataValues.username
+        })
       })
       .catch((error) => { res.status(400).send(error) })
   }

@@ -28,6 +28,7 @@ app.use(session({
   // cookie: { secure: true }
 }))
 
+// PASSPORT STUFF=================================================
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -48,7 +49,7 @@ passport.deserializeUser(function (userID, cb) {
     })
 })
 
-// ROUTES
+// ROUTES=======================================================
 app.use('/', require('./server/routes/frontpage'))
 app.use('/', require('./server/routes/index'))
 
@@ -74,7 +75,10 @@ passport.use(new LocalStrategy(
 
 app.get('/', function (req, res) {
   console.log('req.user ', req.user)
-  res.render('home', { user: req.user })
+  res.render('home', {
+    username: req.user.username,
+    isAuthenticated: !!req.user
+  })
 })
 
 /* Facebook Auth ============================================================================== */
@@ -90,6 +94,13 @@ passport.use(new FacebookStrategy({
   callbackURL: '/auth/facebook/callback'
 },
 function (accessToken, refreshToken, profile, cb) {
+  console.log('profile in facebook function: ', profile.id)
+  users.findOrCreate({
+    where: {
+      username: profile.displayName,
+      facebookId: profile.id
+    }
+  })
   return cb(null, profile)
 }
 ))
@@ -155,7 +166,7 @@ app.post('/signup', function (req, res, next) {
                 console.log('user in signup: ', result.dataValues)
                 console.log('sessionID: ', req.session)
                 console.log('is auth? : ', req.isAuthenticated())
-                res.redirect('../')
+                res.redirect('/')
               })
             })
             .catch((error) => res.status(400).send(error))

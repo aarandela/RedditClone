@@ -29,15 +29,9 @@ module.exports = {
 
   logout (req, res) {
     req.logout()
+    console.log('just logged out', req.session)
     // req.session.destroy()
     res.render('./auth/login')
   }
 
 }
-
-passport.serializeUser(function (userID, cb) {
-  cb(null, userID)
-})
-passport.deserializeUser(function (userID, cb) {
-  cb(null, userID)
-})

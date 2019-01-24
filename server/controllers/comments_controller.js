@@ -3,12 +3,13 @@ const users = require('../../models').users
 const contents = require('../../models').contents
 
 module.exports = {
+
   edit (req, res) {
     return comments
       .update({
         id: req.params.id
       }, {
-        url: req.body.url
+        text: req.body.text
       }, function (err, result) {
         if (err) throw err
 
@@ -20,7 +21,7 @@ module.exports = {
   delete (req, res) {
     return comments
       .find({
-        _id: req.params.id
+        id: req.params.id
       })
       .destroy(function (err, doc) {
         if (err) throw err
@@ -32,10 +33,12 @@ module.exports = {
 
   add (req, res) {
   // Save to PostgreSQL database
+    console.log('add comment user: ', req.user.dataValues.username)
     return comments
       .create({
         text: req.body.text,
-        userID: '21'
+        userID: req.user.id,
+        content_id: req.params.id
       })
     // send result to client
       .then(function () {
@@ -47,11 +50,19 @@ module.exports = {
   },
 
   list (req, res) {
-    return comments
-      .findAll({
-        attributes: ['id', 'text', 'content_id', 'userID'] // find using joins
+    return contents
+      .findOne({
+        where: { content_id: req.params.id }
+          .then((comments) =>
+            comments.findAll({
+              attributes: ['id', 'text', 'content_id', 'userID']
+            })
+              .then((comments) =>
+                res.render('./content_id')
+                  .catch((error) => { res.status(400).send(error) })
+              )
+          )
       })
-      .then((comments) => res.render('./content_id'), { comments, isAuthenticated: !!req.user })
-      .catch((error) => { res.status(400).send(error) })
   }
+
 }

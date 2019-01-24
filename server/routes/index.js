@@ -7,13 +7,14 @@ const usersController = require('../controllers').users
 const commentsController = require('../controllers').comments
 
 // POSTS ROUTES
+router.get('/edit/post/:id', contentsController.editView)
 router.put('/edit/post/:id', contentsController.edit)
 router.delete('/delete/post/:id', contentsController.delete)
 
 // COMMENTS ROUTES
 router.post('/post/:id', commentsController.add)
 router.get('/post/:id', commentsController.list)
-router.put('/edit/:id', commentsController.edit)
+router.get('/edit/:id', commentsController.edit)
 router.delete('/delete/:id', commentsController.delete)
 
 // LOGOUT

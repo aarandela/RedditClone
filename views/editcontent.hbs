@@ -1,0 +1,20 @@
+ {{>header}}
+
+  <div class="container is-size-2" href="" >
+      <h1>{{title}}</h1>
+      </div>
+   
+
+  <form action="/edit/post/{{id}}" method="put">
+      <div class="container">
+       
+      <label>Edit your comment</label> 
+            <textarea id=title class="textarea" type="text" name="text" placeholder="{{url}}"></textarea>
+            <div class="buttons">
+      <a href="/edit/post/{{id}}" class="button ">
+        <strong>Edit</strong>
+      </a>           
+    </div>
+      </div>
+    </form>
+  

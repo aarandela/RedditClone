@@ -4,10 +4,10 @@
         <div class="container is-size-6">
           <div class="notification">
             {{url}}
-
-    {{#if isAuthenticated}}
+    
+    {{#if isUser}}
     <div class="buttons">
-      <a href="/edit/post/{{this.id}}" class="button ">
+      <a href="/edit/post/{{id}}" class="button ">
         <strong>Edit</strong>
       </a>
       <a href="/delete/post/{{id}}" class="button ">
@@ -16,11 +16,11 @@
     </div>
   </div>      
 </div>
-
-  <form action="/post/{{contents.id}}" method="post">
+{{/if}}
+{{#if isAuthenticated}}
+  <form action="/post/{{id}}" method="post">
       <div class="container">
-        {{!-- TODO: add in username --}}
-      <label>Comment as {{req.user.username}}</label> 
+      <label>Comment as {{username}}</label> 
             <textarea id=title class="textarea" type="text" name="text" placeholder="What are your thoughts?"></textarea>
             <button id=contentBtn class="button is-primary">Submit</button>
         
@@ -29,11 +29,11 @@
   {{/if}}
 
   {{!-- list the comments here --}}
-  {{#each comments}}
+  {{#each listComments}}
   <div class="container is-size-6">
           <div class="notification">
-            {{this.text}}
+            {{text}}
           </div>
   </div>
-  {{/each}}
+ {{/each}}
 
