@@ -8,8 +8,8 @@ const commentsController = require('../controllers').comments
 
 // POSTS ROUTES
 router.get('/edit/post/:id', contentsController.editView)
-router.put('/edit/post/:id', contentsController.edit)
-router.delete('/delete/post/:id', contentsController.delete)
+router.get('/edit/post/:id', contentsController.edit)
+router.get('/delete/post/:id', contentsController.delete)
 
 // COMMENTS ROUTES
 router.post('/post/:id', commentsController.add)

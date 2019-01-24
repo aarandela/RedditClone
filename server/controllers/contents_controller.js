@@ -42,16 +42,18 @@ module.exports = {
   },
 
   delete (req, res) {
-    return contents.findOne({ where: { id: req.params.id } })
-      .then((contents) =>
-        contents.destroy()
-          .then(function (err, doc) {
-            if (err) throw err
+    console.log('in delete')
+    return contents.destroy({
+      where: { id: req.params.id },
+      limit: 1,
+      force: true
+    })
+      .then(function (err, doc) {
+        if (err) throw err
 
-            console.log(`[${req.params.id}] post deleted!`)
-            res.redirect('/')
-          })
-      )
+        console.log(`[${req.params.id}] post deleted!`)
+        res.redirect('/')
+      })
   },
 
   add (req, res) {
