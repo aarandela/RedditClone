@@ -85,7 +85,7 @@ module.exports = {
         }
         // console.log('req.user: ', req.user)
         console.log('username would be: ', req.user.dataValues.username, ' in getbyID contents_controller')
-        return res.render('./content_id', {
+        return res.render('content_id', {
           title: contents.title,
           url: contents.url,
           id: req.params.id,

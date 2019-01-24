@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const db = require('./server/db')
+const Sequelize = require('sequelize')
 const exphbs = require('express-handlebars')
 const path = require('path')
 const bodyParser = require('body-parser')
@@ -8,6 +9,7 @@ const session = require('express-session')
 const passport = require('passport')
 const users = require('./models').users
 const LocalStrategy = require('passport-local').Strategy
+const Op = Sequelize.Op
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -34,12 +36,16 @@ app.use(passport.session())
 
 passport.serializeUser(function (userID, cb) {
   console.log('user in serialize: ', userID)
-  cb(null, userID.id)
+  cb(null, userID)
 })
 
 passport.deserializeUser(function (userID, cb) {
   console.log('userdeserialze: ', userID)
-  users.findOne({ where: { id: userID } })
+  users.findOne({ where: { id: userID.id } })
+  // [Op.or]: [
+  // { id: userID.id }
+  // { facebookId: userID.id }
+  // ]
     .then((user) => {
       cb(null, user)
     })
