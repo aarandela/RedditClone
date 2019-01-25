@@ -8,6 +8,7 @@ const commentsController = require('../controllers').comments
 router.get('/', contentsController.list)
 router.get('/#_=_', contentsController.list)
 router.get('/post/:id', contentsController.getById)
+router.get('/post/:id', contentsController.getComments)
 router.get('/submit/post', contentsController.addView)
 router.post('/submit/post', contentsController.add)
 

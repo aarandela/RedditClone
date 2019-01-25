@@ -5,16 +5,15 @@
       </div>
    
 
-  <form action="/edit/post/{{id}}" method="put">
-      <div class="container">
+ 
+  
+     <form action="/edit/post/:id/edited" method="post">
+     <div class="container">
        
       <label>Edit your comment</label> 
-            <textarea id=title class="textarea" type="text" name="text" placeholder="{{url}}"></textarea>
-            <div class="buttons">
-      <a href="/edit/post/{{id}}" class="button ">
-        <strong>Edit</strong>
-      </a>           
-    </div>
-      </div>
-    </form>
+      <input type="text" name="url2" value="{{url}}"style="display: none"><br>
+            <textarea class="textarea" type="text" name="url" placeholder="{{url}}"></textarea>
+    
+  <input type="submit" value="Submit">
+</form>
   

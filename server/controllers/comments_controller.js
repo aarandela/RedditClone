@@ -49,18 +49,31 @@ module.exports = {
       })
   },
 
+  getComments (req, res) {
+    console.log('in getComments')
+    return comments
+      .findOne({ where: { contents_id: req.params.id } })
+      .then((comments) => {
+        return res.render('content_id', {
+          text: comments.text
+        })
+      })
+  },
+
   list (req, res) {
-    return contents
+    console.log('in list comments')
+    return comments
       .findOne({
         where: { content_id: req.params.id }
           .then((comments) =>
             comments.findAll({
               attributes: ['id', 'text', 'content_id', 'userID']
             })
-              .then((comments) =>
-                res.render('./content_id')
+              .then((comments) => {
+                console.log(comments)
+                return res.render('./content_id', { comments })
                   .catch((error) => { res.status(400).send(error) })
-              )
+              })
           )
       })
   }

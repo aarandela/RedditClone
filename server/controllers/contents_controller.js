@@ -14,31 +14,28 @@ module.exports = {
           })
         }
         // console.log('req.user: ', req.user)
-        console.log('username would be: ', req.user.dataValues.username, ' in getbyID contents_controller')
+        console.log('in editView')
         return res.render('./editcontent', {
           title: contents.title,
           url: contents.url,
-          id: req.params.id,
-          isAuthenticated: !!req.user
+          id: req.params.id
+          // isAuthenticated: !!req.user
         })
       })
   },
 
-  edit (res, req, nextFn) {
-    return contents.findOne({ where: { id: req.params.id } })
-      .then((contents) =>
-        contents.update(
-          { url: req.body.url }
-          // { where: { id: req.params.id },
-          //   returning: true }
-        )
-          .then(function (err, result) {
-            if (err) throw err
-            console.log(result)
-            console.log(`[${req.params.id}] post edited!`)
-            res.redirect('../')
-          })
-      )
+  edit (req, res, nextFn) {
+    let url2 = req.body.url2
+
+    return contents.update({ url: req.body.url },
+      { where: { url: url2 } })
+
+      .then(function (err, result) {
+        if (err) throw err
+        console.log(result)
+        console.log('post edited!')
+        res.redirect('../')
+      })
   },
 
   delete (req, res) {
@@ -86,17 +83,28 @@ module.exports = {
           return res.status(404).send('no contents')
         }
         // console.log('req.user: ', req.user)
-        console.log('username would be: ', req.user.dataValues.username, ' in getbyID contents_controller')
+        console.log('getbyID contents_controller')
         return res.render('content_id', {
           title: contents.title,
           url: contents.url,
           id: req.params.id,
           isAuthenticated: !!req.user,
           isUser: (req.user.id === contents.userID),
-          listComments: comments.list
+          listComments: comments.text
         })
       })
       .catch((error) => res.status(400).send(error))
+  },
+
+  getComments (req, res) {
+    console.log('in getComments')
+    return comments
+      .findOne({ where: { contents_id: req.params.id } })
+      .then((comments) => {
+        return res.render('content_id', {
+          text: comments.text
+        })
+      })
   },
 
   list (req, res) {
@@ -115,4 +123,5 @@ module.exports = {
       })
       .catch((error) => { res.status(400).send(error) })
   }
+
 }

@@ -87,18 +87,6 @@ app.get('/', function (req, res) {
   })
 })
 
-const contents = require('./models').contents
-
-app.delete('/delete/post/:id', function (req, res) {
-  contents.destroy({ where: { id: req.params.id } })
-    .then(function (err, doc) {
-      if (err) throw err
-
-      console.log(`[${req.params.id}] post deleted!`)
-      res.redirect('/')
-    })
-})
-
 /* Facebook Auth ============================================================================== */
 
 const FacebookStrategy = require('passport-facebook').Strategy
@@ -113,12 +101,12 @@ passport.use(new FacebookStrategy({
 },
 function (accessToken, refreshToken, profile, cb) {
   console.log('profile in facebook function: ', profile.id)
-  // users.findOrCreate({
-  //   where: {
-  //     username: profile.displayName,
-  //     facebookId: profile.id
-  //   }
-  // })
+  users.findOrCreate({
+    where: {
+      username: profile.displayName,
+      facebookId: profile.id
+    }
+  })
   return cb(null, profile)
 }
 ))
