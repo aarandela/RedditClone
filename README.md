@@ -1,6 +1,8 @@
 # spreddit
 
-> The purpose of this project is for learning purposes only! 
+> The purpose of this project is for learning purposes only! After two weeks of learning the back-end through this project, I was able to implement the CRUD, learn HTML templating through Handlebars, learn ALOT on ORMs like Sequelize, and have a better grasp on authorization/OAuth. 
+
+> Due to time constraints, this application is not finished. But, it is able to locally authorize logging in and signing up. As well as creating posts, updating the post and deleting the post by the user who created it. Different users are not allowed to edit/delete posts and only registered users logged in are able to create posts.
 
 In this back-end project, I attempted to replicate 'The front page of the Internet', Reddit. Users can sign up/log in, post content, and post comments on the content. Although I didn't hit all the requirements, I feel like I have a better understanding of how the back-end works. 
 
@@ -75,8 +77,3 @@ Your application **must**:
     - Help is limited (even though I can ask others, its not the same as if it was a group)
     - Have to do all of the app myself, no distributing to others
     
-* Other Thoughts
-  - I thought cloing Reddit would be a simple task... Mistakes were made.
-  - As I started to research and dig into this project, it got more and more complicated. Lots of reading and understanding how the back-end of this site works is beneficial, but time-consuming.
-  - With only 2 weeks (part-time) to hit all the requirements for cloning Reddit, I feel like I bit off more than I can chew.
-  - Eventhough I didn't finish all the requirements, I at least did the 'meat' of the project and I can proudly I am a Full-Stack Web Developer now. (In the libraries I used :P)
